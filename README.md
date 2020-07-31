@@ -1,4 +1,27 @@
-﻿<p align="right">
+﻿# Forked and modified for personal notes
+Ref [here](https://github.com/Xilinx/Vitis-Tutorials) for upstream (original) source.
+# General information
+- 
+# Vitis (includes Vivado) Installation steps
+1. Ubuntu instance
+1. All commands are run from Bash shell
+1. Install [required packages](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/aqm1532064088764.html)
+1. Download and install Vivado software (which includes Vitis)
+    - If using AWS SDK, use [a version supported by AWS SDK/HDK](https://github.com/aws/aws-fpga/blob/master/supported_vivado_versions.txt)
+1. Setup Vitis (ref [here](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/rbk1547656041291.html))
+    1. run `source <Vitis_install_path>/Vitis/2019.2/settings64.sh`
+    1. download and install [Xilinx Runtime Library (XRT)](https://www.xilinx.com/products/design-tools/vitis/xrt.html#overview)
+        - need to check if this can use files in AWS git repo found [here](https://github.com/aws/aws-fpga/tree/master/Vitis/aws_platform/xilinx_aws-vu9p-f1_shell-v04261818_201920_2)
+    1. `export PLATFORM_REPO_PATHS=<path to platforms>`
+
+# AWS FPGA Installation / Setup
+1. Optional, but make sure to run all Vitis installation steps first
+    - For importance of setting up Vitis first, ref especially [here](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/uxq1573167801088.html)
+1. Clone AWS from [here](https://github.com/aws/aws-fpga)
+1. Source one of the various `setup_.sh` scripts in the AWS FPGA repo dir
+    - for Vitis, run `source vitis_setup.sh`
+
+<p align="right">
 <a>English</a> | <a href="/docs-jp/README.md">日本語</a>
 </p>
 
