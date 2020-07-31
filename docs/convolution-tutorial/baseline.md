@@ -1,11 +1,11 @@
-﻿<table>
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
+ <td>
  </td>
  </tr>
 </table>
@@ -24,7 +24,7 @@ Use the following instructions to convert the C code into kernel code and conver
 
 >**TIP:** The completed kernel source file is provided in the `reference-files/baseline` folder. You can use it as a reference if needed.
 
-1. Select the `convolve_kernel.cpp` file from `cpu_src` folder, and make a copy called `convolve_fpga.cpp`.
+1. Select the `convolve_kernel.cpp` file in the `cpu_src` folder, and make a copy called `convolve_fpga.cpp`.
 
 2. Open the `convolve_fpga.cpp` file and rename the `convolve_cpu` function to `convolve_fpga`.
 
@@ -48,12 +48,7 @@ Use the following instructions to convert the C code into kernel code and conver
 
     The AXI Master ports are used by the kernel to access data in the global memory. The base address of the data (`offset`) is provided to the kernel through the previously defined control interface (`slave`). The _bundle_ property of the pragma allows you to name the interface ports. In this example, the function has three pointer arguments, but the kernel will have two ports, `gmem1` and `gmem2`. The `gmem1` port will be used to read `inFrame` and write `outFrame`, and the `gmem2` port will be used to read `coefficient`.
 
-5. Finally, add the `data_pack` pragma for the `inFrame` and `outFrame` arguments. This pragma tells the compiler to aggregate all the elements of a struct into a single, wide vector, allowing all members of the struct to be accessed simultaneously.
-
-        #pragma HLS data_pack variable=inFrame
-        #pragma HLS data_pack variable=outFrame
-
-   >**NOTE:** For more details about the pragma meanings, refer to the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html).
+   >**NOTE:** For more details about pragmas, refer to the [Vitis Environment Reference Materials](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/yxl1556143111967.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 6. Save the `convolve_fpga.cpp` file.
 
@@ -63,10 +58,13 @@ Use the following instructions to convert the C code into kernel code and conver
 
     ```
     cd design/makefile
-    make run TARGET=hw_emu STEP=baseline SOLUTION=1 NUM_FRAMES=1
+    make run TARGET=hw_emu STEP=baseline NUM_FRAMES=1
     ```
 
-    >**TIP:** The modifications based on each lab can made from the `src` directory. The completed code is also provided for all the optimizations in this lab. You do not need to modify the code if you just want to run the results. You can enable this by setting `SOLUTION=1`.
+    >**TIP:** The modifications based on each lab can made from the `src` directory. The completed code is also provided for all the optimizations in this lab. You do not need to modify the code if you just want to run the results. You can enable this by adding `SOLUTION=1` to the command: 
+    >```
+    >make run TARGET=hw_emu STEP=baseline SOLUTION=1 NUM_FRAMES=1
+    >```
 
     You should see the following text in the console both during and after the application has finished executing.
 
@@ -110,7 +108,8 @@ Use the following instructions to convert the C code into kernel code and conver
 | Step          | Image Size | Time (HW-EM)(ms) | Reads (KB) | Writes (KB) | Avg. Read (KB) | Avg. Write (KB) | BW (MBps) |
 | :------------ | :--------- | ---------------: | ---------: | ----------: | -------------: | --------------: | --------: |
 | baseline      | 512x10     | 3.903            | 344        | 20.0        | 0.004          | 0.004           |   5.2     |
----------------------------------------
+
+
 
 [baseline_hwemu_profilesummary]: ./images/191_baseline_hwemu_pfsummary_new_2.JPG "Baseline version hardware emulation profile summary"
 
@@ -119,6 +118,6 @@ Use the following instructions to convert the C code into kernel code and conver
 You have created the hardware kernel and run the application in hardware emulation mode. You will now begin to examine data transfers between the host application and the kernel and determine some good strategies for [optimizing memory transfers](./localbuf.md).
 </br>
 <hr/>
-<p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/convolution-tutorial/README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

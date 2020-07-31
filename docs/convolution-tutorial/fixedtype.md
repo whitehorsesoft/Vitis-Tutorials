@@ -1,12 +1,12 @@
 ﻿
-<table>
+<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
+ <td>
  </td>
  </tr>
 </table>
@@ -15,7 +15,7 @@
 
 In the last lab, you optimized the memory accesses between the kernel and the global memory. In this lab, you will focus on improving the efficiency of the kernel by converting from floating point to fixed point data types.  
 
-The original code uses floating point for the sums and coefficient. Here you will use the ap_fixed<16,9> type, representing a 9-bit signed integer with seven decimal bits. This type was chosen because it improves performance and resource utilization, while maintaining the necessary precision for the application.
+The original code uses floating point for coefficients and accumulators. Here you will use the ap_fixed<16,9> type, representing a 9-bit signed integer with seven decimal bits. This type was chosen because it improves performance and resource utilization, while maintaining the necessary precision for the application.
 
 Look at the following inner loop of your convolution kernel.
 
@@ -46,7 +46,7 @@ The inner loop is multiplying individual members of an `RGBPixel` object which a
 
 ## Kernel Code Modifications
 
->**TIP:** The completed kernel source file is provided in the `reference-files/fixedpoint` folder. You can use it as a reference if needed.
+>**TIP:** The modified kernel source file is provided in the `reference-files/fixedpoint` folder. You can use it as a reference if needed.
 
 Open the `convolve_fpga.cpp` file from `src/fixedpoint` and make the following modifications.
 
@@ -125,7 +125,7 @@ Here is the updated table. There is a 3.4x boost on kernel execution time perspe
 | baseline          |     512x10 | 3.903            | 344             |        20.0 |          0.004 |           0.004 |    5.2     |
 | localbuf          |     512x10 | 1.574 (2.48x)    | 21  (0.12x)     |        20.0 |          0.064 |           0.064 |    13      |
 | fixedpoint data   |     512x10 | 0.46 (3.4x)      | 21              |        20.0 |          0.064 |           0.064 |    44      |
------------------------------------------------------------------------------------
+
 
 [fixedtype_hwemu_profilesummary]: ./images/191_fixedtype_hwemu_pfsummary_new_2.jpg "Fixed-type data version hardware emulation profile summary"
 
@@ -134,6 +134,6 @@ Here is the updated table. There is a 3.4x boost on kernel execution time perspe
 In the next section, you examine how breaking a single function into sub-functions lets you achieve task-level parallelism between the different functions. In this case, you will be [optimizing with dataflow](./dataflow.md).
 </br>
 <hr/>
-<p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="../vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="../convolution-tutorial/README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

@@ -1,22 +1,24 @@
-﻿<table>
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Using Multiple DDR Banks</h1>
+ <td>
  </td>
  </tr>
 </table>
 
-# Introduction
+# Using Multiple DDR Banks
+
+## Introduction
 
 By default, in the Vitis™ core development kit, the data transfer between the kernel and the DDR is achieved using a single DDR bank. In some applications, data movement is a performance bottleneck. In cases where the kernels need to move large amounts of data between the global memory (DDR) and the FPGA, you can use multiple DDR banks. This enables the kernels to access multiple memory banks simultaneously. As a result, the application performance increases.
 
 The System Port mapping option using the `v++` command `--sp` switch allows the designer to map kernel ports to specific global memory banks, such as DDR or PLRAM. This tutorial shows you how to map kernel ports to multiple DDR banks.
 
-# Tutorial Overview
+## Tutorial Overview
 
 This tutorial uses a simple example of vector addition. It shows the `vadd` kernel reading data from `in1` and `in2` and producing the result, `out`.
 
@@ -38,24 +40,24 @@ To achieve the desired mapping, instruct the Vitis core development kit to conne
 
 The example in this tutorial uses a C++ kernel; however, the steps described are also the same for RTL and OpenCL™ API kernels.
 
-# Before You Begin
+## Before You Begin
 
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2019.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform. If necessary, it can be easily extended to other versions and platforms.
+* 2020.1 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* platform. If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
->* If you will run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions in the *Getting Started with Alveo Data Center Accelerator Cards Guide* ([UG1301](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=ug1301-getting-started-guide-alveo-accelerator-cards.pdf)).
+> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
-## Accessing the Tutorial Reference Files
+### Accessing the Tutorial Reference Files
 
 1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`.
 2. Navigate to the `mult-ddr-banks` directory, and then access the `reference-files` directory.
 
-## Tutorial Setup
+### Tutorial Setup
 
 1. To set up the Vitis core development kit, run the following commands.
 
@@ -116,35 +118,35 @@ Now, you will explore how the data transfers can be split across the following:
 
 ## Set v++ Linker Options
 
-You will instruct the `v++` Kernel Linker to connect the kernel arguments to the corresponding banks. Use the `--sp` option to map kernel ports or kernel arguments.
+You will instruct the `v++` Kernel Linker to connect the kernel arguments to the corresponding banks. Use the `sp` option to map kernel ports or kernel arguments.
 
 * **Kernel args**:
 
      ```
-     --sp <kernel_cu_name>.<kernel_arg>:<sptag>
+       sp = <kernel_cu_name>.<kernel_arg>:<sptag>
      ```
 
   * `<kernel_cu_name>`: The compute unit (CU) based on the kernel name, followed by `_` and `index`, starting from the value `1`. For example, the computer unit name of the vadd kernel will be `vadd_1`
   * `<kernel_arg>`: The function argument of the CU. For the vadd kernel, the kernel argument can be found in the `vadd.cpp` file.
   * `<sptag>`: Represents a memory resource available on the target platform. Valid sptag names include DDR and PLRAM. In this tutorial, target `DDR[0]`, `DDR[1]`, and `DDR[2]`. You can also do ranges: `<sptag>[min:max]`.
 
-1. Define the `--sp` command options for the vadd kernel and add this to the Makefile.
+1. Define the `sp` command options for the vadd kernel and add this to the Makefile.
 
    The kernel instance name will be: `vadd_1`.
    The arguments for the vadd kernel are specified in the `vadd.cpp` file. The kernel argument (`in1`, `in2`, and `out`) should be connected to `DDR[0]`, `DDR[1]`, and `DDR[2]`.  
-   Therefore, the `--sp` options should be:
+   Therefore, the `sp` options should be:
 
    ```
-   --sp vadd_1.in1:DDR[0]
-   --sp vadd_1.in2:DDR[1]
-   --sp vadd_1.out:DDR[2]
+   sp = vadd_1.in1:DDR[0]
+   sp = vadd_1.in2:DDR[1]
+   sp = vadd_1.out:DDR[2]
    ```
 
    * Argument `in1` accesses DDR Bank0
    * Argument `in2` accesses DDR Bank1
    * Argument `out` accesses DDR Bank2.
 
-   The three `--sp` options are added in `connectivity.cfg` file and you need to modify the Makefile to use that config file.
+   The three `sp` options are added in `connectivity.cfg` file and you need to modify the Makefile to use that config file.
 
 2. Open the Makefile and uncomment line 18 to add the config file into `v++` linker options.
 
@@ -173,7 +175,7 @@ You will instruct the `v++` Kernel Linker to connect the kernel arguments to the
 
    This confirms that the Vitis core development kit has correctly mapped the kernel arguments to the specified DDR banks from the `--sp` options provided.
 
-4. Run HW-Emulation and verify the correctness of the design.
+4. Run HW-Emulation, and verify the correctness of the design.
 
    ```bash
    make check
@@ -193,14 +195,14 @@ vadd_1:m_axi_gmem2-DDR[2]          RD = 0.000 KB               WR = 0.391 KB
 
   ![](./images/mult-ddr-banks_img_vitis.png)
 
-## Conclusion
+### Conclusion
 
 This tutorial showed you how to change the default mapping of ports `in1`, `in2`, and `out` of kernel vadd from a single DDR bank to multiple DDR banks. You also learned how to:
 
 * Set `v++` linker options using the `--sp` switch to bind kernel arguments to multiple DDR banks.
-* Build the application and verify DDR mapping.
+* Build the application, and verify DDR mapping.
 * Run HW-Emulation and observe the transfer rate and bandwidth utilization for each port.
 </br>
 <hr/>
-<p align= center><b><a href="/README.md">Return to Main Page</a></b></p>
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

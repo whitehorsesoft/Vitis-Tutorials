@@ -1,11 +1,11 @@
-﻿<table>
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
+ <td>
  </td>
  </tr>
 </table>
@@ -206,31 +206,31 @@ Now you can compile and run the design, and you should see results similar to th
    make run TARGET=hw_emu STEP=multicu SOLUTION=1 NUM_FRAMES=1
    ```
 
-The following code shows the results of this kernel running on four CUs.
+    The following code shows the results of this kernel running on four CUs.
 
-```
-Processed 0.08 MB in 42.810s (0.00 MBps)
+    ```
+    Processed 0.08 MB in 42.810s (0.00 MBps)
 
-INFO: [Vitis-EM 22] [Wall clock time: 01:34, Emulation time: 0.102462 ms] Data transfer between kernel(s) and global memory(s)
-convolve_fpga_1:m_axi_gmem1-DDR[0]          RD = 24.012 KB              WR = 0.000 KB
-convolve_fpga_1:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
-convolve_fpga_1:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
-convolve_fpga_2:m_axi_gmem1-DDR[0]          RD = 22.012 KB              WR = 0.000 KB
-convolve_fpga_2:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
-convolve_fpga_2:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
-convolve_fpga_3:m_axi_gmem1-DDR[0]          RD = 24.012 KB              WR = 0.000 KB
-convolve_fpga_3:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
-convolve_fpga_3:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
-convolve_fpga_4:m_axi_gmem1-DDR[0]          RD = 22.000 KB              WR = 0.000 KB
-convolve_fpga_4:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
-convolve_fpga_4:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
-```
+    INFO: [Vitis-EM 22] [Wall clock time: 01:34, Emulation time: 0.102462 ms] Data transfer between kernel(s) and global memory(s)
+    convolve_fpga_1:m_axi_gmem1-DDR[0]          RD = 24.012 KB              WR = 0.000 KB
+    convolve_fpga_1:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
+    convolve_fpga_1:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
+    convolve_fpga_2:m_axi_gmem1-DDR[0]          RD = 22.012 KB              WR = 0.000 KB
+    convolve_fpga_2:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
+    convolve_fpga_2:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
+    convolve_fpga_3:m_axi_gmem1-DDR[0]          RD = 24.012 KB              WR = 0.000 KB
+    convolve_fpga_3:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
+    convolve_fpga_3:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
+    convolve_fpga_4:m_axi_gmem1-DDR[0]          RD = 22.000 KB              WR = 0.000 KB
+    convolve_fpga_4:m_axi_gmem2-DDR[0]          RD = 0.000 KB               WR = 20.000 KB
+    convolve_fpga_4:m_axi_gmem3-DDR[0]          RD = 0.035 KB               WR = 0.000 KB
+    ```
 
-You can now perform four times more work in about the same amount of time. You transfer more data from global memory because each CU needs to read the surrounding padding lines.
+    You can now perform four times more work in about the same amount of time. You transfer more data from global memory because each CU needs to read the surrounding padding lines.
 
 ## View Profile Summary Report for Hardware Emulation
 
-1. Use the following command to view the Profile Summary report.
+Use the following command to view the Profile Summary report.
 
 ```
 make view_run_summary TARGET=hw_emu STEP=multicu
@@ -250,16 +250,16 @@ Here is the updated table.
 
 >**NOTE:**
 >
->* The multi-CU version processed four times of the data comparing to previous versions. Even if each CU's execution time does not change, four parallel CUs increase the system performance by almost four times.
->* This is calculated by 4x data/Time. Here the data transfer time is not accounted for, and you assume that the four CUs are executing in parallel. This is not as accurate as the hardware run, but you will use it as a reference for optimizations effectiveness.
+>* The multi-CU version processed four times the amount of data compared to previous versions. Even if the CU execution time does not change for each CU, the four parallel CUs increase the system performance by almost four times.
+>* This is calculated by 4x data/time. Here the data transfer time is not accounted for, and you assume that the four CUs are executing in parallel. This is not as accurate as the hardware run, but you will use it as a reference for optimizations effectiveness.
 
 ## Next Steps
 
-In this step, you performed host code optimizations by using out-of-order command queue and executing multiple CUs. In the next step, you have the application [run the accelerator in hardware](./RunOnHardware.md).
+In this step, you performed host code optimizations by using out-of-order command queue and executing multiple CUs. In the next step, you will be [Using QDMA Streaming with Multiple Compute Units](./qdma.md).
 
 [hostopt_hwemu_profilesummary]: ./images/191_hostopt_hwemu_pfsummary_40_2.jpg "Host code optimization version hardware emulation profile summary"
 </br>
 <hr/>
-<p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/convolution-tutorial/README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

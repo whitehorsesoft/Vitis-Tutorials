@@ -1,11 +1,11 @@
-﻿<table>
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>My First Program</h1>
+ <td>
  </td>
  </tr>
 </table>
@@ -16,8 +16,8 @@ After coding the kernel, you will now learn about the host application. The host
 
 An example host code is provided in the `./reference-files/src` folder, which shows both the C++ version and the C version. In this tutorial, you will only be looking at the C++ version.
 
-- The C++ version of the host code can be found in the [host.cpp](./reference-files/src/host.cpp) file.
-- The C version of the host code can be found in the [host.c](./reference-files/src/host.c) file.
+- The C++ version of the host code can be found in the `host.cpp` file.
+- The C version of the host code can be found in the `host.c` file.
 
 In general, you can divide the structure of the host application into three sections:
 
@@ -34,12 +34,12 @@ The application must start by setting up and initializing the FPGA. This typical
 - Retrieving the list of available Xilinx platforms.
 - Retrieving the list of devices supported by each Xilinx platform.
 - Creating a context.
-- Creating a program object from the pre-compiled FPGA binary (xclbin).
-- Creating a kernel object
+- Creating a program object from the pre-compiled FPGA binary (`xclbin`).
+- Creating a kernel object.
 
-As you work through this section, refer to step 1 in the [host.cpp](./reference-files/src/host.cpp) file.
+As you work through this section, refer to step 1 in the `host.cpp` file.
 
->**TIP:** This lab references the C++ code, but C-code is also provided in the reference files. For more information on specific OpenCL API calls listed here, refer to the [OpenCL Reference Pages](https://www.khronos.org/registry/OpenCL/sdk/1.2/docs/man/xhtml/).
+>**TIP:** This lab references the C++ code, but C code is also provided in the reference files. For more information on specific OpenCL API calls listed here, refer to the [OpenCL Reference Pages](https://www.khronos.org/registry/OpenCL/sdk/1.2/docs/man/xhtml/).
 
 1. The application should start by identifying the platforms composed of Xilinx FPGA devices. To identify the presence of Xilinx platforms, you should use the `cl::Platform::get` OpenCL API. This call returns the available platforms in the system.
 
@@ -53,7 +53,7 @@ As you work through this section, refer to step 1 in the [host.cpp](./reference-
      platform.getInfo<CL_PLATFORM_NAME>(&err)
     ```
 
-    Now the host needs to select a particular device from the respective platform. This is done using the `cl::platform::getDevices` API.
+    Now the host needs to select a specific device from the respective platform. This is done using the `cl::platform::getDevices` API.
 
     ```Cpp
     platform.getDevices(CL_DEVICE_TYPE_ACCELERATOR, &devices)
@@ -77,29 +77,29 @@ As you work through this section, refer to step 1 in the [host.cpp](./reference-
    cl::CommandQueue q(context, device, CL_QUEUE_PROFILING_ENABLE, &err)
    ```
 
-4. Next, you need to create a program object. The program object is created from the pre-compiled FPGA binary file (xclbin). It contains the collection of user-defined kernel functions and is programed onto the FPGA.
+4. Next, you need to create a program object. The program object is created from the pre-compiled FPGA binary file (`xclbin`). It contains the collection of user-defined kernel functions and is programed onto the FPGA.
 
-   >**TIP:** The xclbin is the compiled kernel binary created, as explained in [Building an Application](/docs/Pathway3/BuildingAnApplication.md).
+   >**TIP:** The `xclbin` is the compiled kernel binary created, as explained in [Building an Application](../Pathway3/BuildingAnApplication.md).
 
-   First, the application needs to read the contents of xclbin file. In this tutorial, you will use a user-defined function, `read_binary_file`, to achieve this. This function returns a pointer to the contents of xclbin file.
+   First, the application needs to read the contents of `xclbin` file. In this tutorial, you will use a user-defined function, `read_binary_file`, to achieve this. This function returns a pointer to the contents of `xclbin` file.
 
    ```Cpp
    fileBuf = read_binary_file(binaryFile, fileBufSize)
    ```
 
-   Then, create a `cl::Program::Binaries` object to store the contents of the xclbin binary file.
+   Then, create a `cl::Program::Binaries` object to store the contents of the `xclbin` binary file.
 
    ```Cpp
    cl::Program::Binaries bins{{fileBuf, fileBufSize}}
    ```
 
-   Lastly, create the program object and initialize it with the contents of xclbin binary stored in the `bins` variable. To do this, use the `cl::Program program` API.
+   Lastly, create the program object and initialize it with the contents of `xclbin` binary stored in the bins variable. To do this, use the `cl::Program program` API.
 
     ```Cpp
     cl::Program program(context, devices, bins, NULL, &err)
     ```
 
-    This step programs the FPGA with the binary loaded in the `bins` variable. If successful, this function will return `CL_SUCCESS`; make sure to check the return code. 
+    This step programs the FPGA with the binary loaded in the bins variable. If successful, this function will return `CL_SUCCESS`; make sure to check the return code.
 
 5. Next, you must create kernel objects. Kernel objects are handles which the software application will use to pass arguments to the actual hardware kernels and execute them. Kernel objects are created using the `cl::Kernel` API.
 
@@ -118,7 +118,7 @@ Now that you set up the hardware, the host application is ready to issue command
 - Kernel execution on the FPGA
 - Event Synchronization
 
-As you work through this section, refer to step 2 in the [host.cpp](./reference-files/src/host.cpp) file.
+As you work through this section, refer to step 2 in the `host.cpp` file.
 
 1. First, you must create buffers in the global memory. Buffers are used to transfer data back and forth between the host and the device. Kernels will read, process, and write back data in these buffers. Buffer objects are created using the `cl::Buffer` API.
 
@@ -163,7 +163,7 @@ As you work through this section, refer to step 2 in the [host.cpp](./reference-
     q.enqueueMigrateMemObjects({buffer_output},CL_MIGRATE_MEM_OBJECT_HOST)
     ```
 
-6. Lastly, wait for the completion of all the requests placed in the command queue.
+6. Finally, wait for all the requests placed in the command queue to complete.
 
     ```Cpp
     q.finish();
@@ -171,15 +171,15 @@ As you work through this section, refer to step 2 in the [host.cpp](./reference-
 
     It is important to understand that an "enqueue" API call does not actually execute the specified command; it only requests its execution. When an "enqueue" function returns, it does not mean that that the command has actually been executed. It is up to the runtime to schedule the execution of the command. Therefore, the application must use synchronization methods to know when commands have completed.
 
-## Releasing the FPGA after the Application Returns
+## Releasing the FPGA After the Application Returns
 
-The last step in building the host application is releasing the objects. As you work through this section, refer to step 3 in the [host.cpp](./reference-files/src/host.cpp) file. The C++ wrapper releases the objects automatically once the object passes out of scope.
+The last step in building the host application is releasing the objects. As you work through this section, refer to step 3 in the `host.cpp` file. The C++ wrapper releases the objects automatically once the object passes out of scope.
 
 ## Next Step
 
 The next step in this tutorial is to [compile, link, and run the application and the kernel](./building_application.md).
 </br>
 <hr/>
-<p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

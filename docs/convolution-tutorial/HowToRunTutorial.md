@@ -1,11 +1,11 @@
-﻿<table>
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
+ <td>
  </td>
  </tr>
 </table>
@@ -18,11 +18,12 @@ Under the `src` folder, there are six sub-folders, which contain the source file
 
 | Tutorial Step                                             | Associated Directory  |
 |-------------------------------------------------------------|------------------------ |
-| Creating a Vitis core development kit application from C application          |     [src/baseline](./design/src/baseline)        |
-| Optimizing memory transfers                                  |     [src/localbuf](./design/src/localbuf)        |
-| Optimizing by using fixed point data types:                 |     [src/fixedpoint](./design/src/fixedpoint)      |
-| Optimizing with dataflow                                    |     [src/dataflow](./design/src/dataflow)        |
-| Using Out-of-order queues and multiple kernels              |     [src/multicu](./design/src/multicu)         |
+| Creating a Vitis core development kit application from C application          |     `src/baseline`        |
+| Optimizing memory transfers                                  |     `src/localbuf`        |
+| Optimizing by using fixed point data types:                 |     `src/fixedpoint`      |
+| Optimizing with dataflow                                    |     `src/dataflow`        |
+| Using Out-of-order queues and multiple kernels              |     `src/multicu`         |
+| Using Using QDMA with Multiple Compute Units              |     `src/qdma`         |
 
 Makefile targets can be used to run software emulation, hardware emulation, as well as hardware on the Alveo Data Center accelerator card.
 
@@ -87,6 +88,6 @@ make clean TARGET=hw_emu STEP=baseline
 This cleans the hardware emulation-generated files for the baseline version design.
 </br>
 <hr/>
-<p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/convolution-tutorial/README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

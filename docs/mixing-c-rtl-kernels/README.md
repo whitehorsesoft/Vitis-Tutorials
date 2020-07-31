@@ -1,22 +1,24 @@
-﻿<table>
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Mixing C++ and RTL Kernels</h1>
+ <td>
  </td>
  </tr>
 </table>
 
-# Introduction
+# Mixing C++ and RTL Kernels
 
-In the Vitis™ core development kit, an application program is split between a host application and hardware accelerated kernels. The host application is developed in C/C++ with OpenCL™ API calls.  The hardware kernels, on the other hand, can be developed in C/C++, OpenCL C, or RTL. In fact, Vitis core development kit applications can use any combination of kernels developed in the different languages. The host code is indifferent to how the kernel was developed; it uses the same function call.
+## Introduction
 
-# Tutorial Overview
+In the Vitis™ core development kit, an application program is split between a host application and hardware accelerated kernels. The host application is developed in C/C++ with OpenCL™ API calls. The hardware kernels, on the other hand, can be developed in C/C++, OpenCL C, or RTL. In fact, the Vitis core development kit applications can use any combination of kernels developed in the different languages. The host code is indifferent to how the kernel was developed; it uses the same function call.
 
-This tutorial demonstrates an application using two kernels, one designed in C++ and the other designed in RTL, with the host code accessing the kernels in an identical manner.  
+## Tutorial Overview
+
+This tutorial demonstrates an application using two kernels, one designed in C++ and the other designed in RTL, with the host code accessing the kernels in an identical manner.
 
 This tutorial is split into two parts:
 
@@ -27,39 +29,39 @@ During both parts, the application is built using a Makefile. Software emulation
 
 The host code and C++ kernel code are supplied. The RTL code will be generated using the RTL Kernel Wizard.
 
-# Before You Begin
+## Before You Begin
 
 This tutorial uses:
 
 - BASH Linux shell commands.
-- 2019.2 Vitis core development release and the *xilinx_u200_xdma_201830_2* platform. If necessary, it can be easily extended to other versions and platforms.
+- 2020.1 Vitis core development release and the *xilinx_u200_xdma_201830_2* platform. If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/vhc1571429852245.html).
->* If you will run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions in the *Getting Started with Alveo Data Center Accelerator Cards Guide* ([UG1301](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards;v=latest;d=ug1301-getting-started-guide-alveo-accelerator-cards.pdf)).
+> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
-Before running any of the examples, ensure you have setup the Vitis core development kit by running the following commands:
+Before running any of the examples, ensure you have set up the Vitis core development kit by running the following commands.
 
   ```bash
     #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
-    source /opt/Xilinx/Vitis/2019.2/settings64.sh
+    source /opt/Xilinx/Vitis/2020.1/settings64.sh
     #Setup runtime. XILINX_XRT will be set in this step
     source /opt/xilinx/xrt/setup.sh
   ```
 
-## Accessing the Tutorial Reference Files
+### Accessing the Tutorial Reference Files
 
 1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`.
 2. Navigate to the `mixing-c-rtl-kernels` directory, and then access the `reference-files` directory.
 
-# Building an Application with C++ Based Kernel
+## Building an Application with C++ Based Kernel
 
 In this step, you will build an application, consisting of host code and a C++ kernel using a makefile.  
 
-For an overview on building an application, refer to [Building An Application](/docs/Pathway3/BuildingAnApplication.md).
+For an overview on building an application, refer to the [Building An Application](../Pathway3/BuildingAnApplication.md) lab.
 
-## C++ Based Kernel
+### C++ Based Kernel
 
 The C++ based kernel adds two input vectors and generates the output result. The source code is found in the following directory.
 
@@ -67,9 +69,9 @@ The C++ based kernel adds two input vectors and generates the output result. The
 ./reference-files/src/kernel_cpp/
 ```
 
-The makefile will build this kernel and add it to the hardware platform (xclbin), which can be accessed by the host code.
+The makefile will build this kernel and add it to the hardware platform (`xclbin`), which can be accessed by the host code.
 
-## Host Code
+### Host Code
 
 The host code for step 1 (`host_step1.cpp`) can be found in the following directory.
 
@@ -77,9 +79,9 @@ The host code for step 1 (`host_step1.cpp`) can be found in the following direct
 ./reference-files/src/host/
 ```
 
-It sets up the platform and defines global memory buffers and connections to the kernel. The four important sets of OpenCL API calls in the host code are described below. To view these calls, open the `host_step1.cpp` file.
+It sets up the platform and defines global memory buffers and connections to the kernel. The following four important sets of OpenCL API calls in the host code are described. To view these calls, open the `host_step1.cpp` file.
 
-- The first set of code, on lines 189-191, creates the program to execute. It uses the binary container, which contains only the C++-based kernel.
+- The first set of code, on lines 189-191, creates the program to execute. It uses the binary container, which contains only the C++ based kernel.
 
    ```
    cl::Program::Binaries bins;
@@ -120,9 +122,9 @@ It sets up the platform and defines global memory buffers and connections to the
    q.enqueueTask(krnl_vector_add);
    ```
 
-For complete details on host code programming, refer to [Developing Applications](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html).
+For complete details on host code programming, refer to [Developing Applications](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=lhv1569273988420.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
-## Build the Application
+### Build the Application
 
 1. To build the application targeting software emulation, run the following makefile from the `./reference-files/run1` directory.
 
@@ -132,7 +134,7 @@ For complete details on host code programming, refer to [Developing Applications
 
    This builds both the host software and hardware binary targeted to software emulation. The makefile will also generate the platform JSON emulation file to use during emulation.
 
-## Run Emulation
+### Run Emulation
 
 During emulation, you gather application timeline data, consisting of host and device events, which can be reviewed after emulation has completed on a common timeline. The Application Timeline data collection must be enabled before running the emulation by setting *timeline_trace=true* option in an `xrt.ini` file.  
 
@@ -160,66 +162,65 @@ This file has already been created and is in the `run1` and `run2` directories.
 
    `TEST WITH ONE KERNEL PASSED`
 
-## Review the Application Timeline
+### Review the Application Timeline
 
 Review the Application Timeline generated during software emulation to visualize the host events and the kernel running.  
 
 1. To view the Application Timeline, use the Vitis analyzer by running the following command from within the `run1` directory.
 
    ```
-   vitis_analyzer -open ./timeline_trace.csv
+   vitis_analyzer xclbin.run_summary
    ```
 
-   Under the **Device**>**Binary Container**, you will see a line called Compute Unit krnl_vadd_1.  
-
-2. Traverse along the timeline and zoom in on the compute unit (CU) krnl_vadd_1 to confirm it shows as `running`.  
+2. Click on the Application Timeline option on the left to bring up the Application Timeline.
 ![Missing Image:Application Timeline 1](images/mixing-c-rtl-kernels_timeline_one_kernel_vitis.PNG)  
 
 3. After reviewing, close the Application Timeline window.  
    >**NOTE:** A CU is an instantiation of the kernel on the FPGA.
 
-### Putting it All Together
+#### Putting it All Together
 
 For step 1, the following steps were performed. All commands are run in the `./reference-files/run1` directory:
 
-   ```bash
-      # Build the application
-      make all TARGET=sw_emu
+```bash
+# Build the application
+make all TARGET=sw_emu
 
-      # Set XCL_EMULATION_MODE environment variable for software emulation
-      export XCL_EMULATION_MODE=sw_emu
+# Set XCL_EMULATION_MODE environment variable for software emulation
+export XCL_EMULATION_MODE=sw_emu
 
-      # Run software emulation
-      ./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
+# Run software emulation
+./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
 
-      # Create timeline waveform and view in Vitis
-      vitis_analyzer -open ./timeline_trace.csv
+# View Application Timeline Trace in Vitis Analyzer
+vitis_analyzer xclbin.run_summary
    ```
 
-# Building an Application with C++ and RTL-Based Kernels
+## Building an Application with C++ and RTL-Based Kernels
 
 Now that you have successfully built and run an application with a C++ based kernel, update the application to include an RTL-based kernel.  
 
 Similar to the previous section, you will build, emulate, and review the generated Application Timeline. Regardless of how the kernels were designed, after the kernel has been built, the host code accesses the kernels through similar function calls.  
 
-## RTL-Based Kernel
+### RTL-Based Kernel
 
 First, you will create and package an RTL-based kernel using the RTL Kernel Wizard. By default, the wizard creates a kernel to increment by one. This kernel will be used in this tutorial. Additionally, the wizard automates the steps needed to package the RTL design into a kernel object file (XO).
 
-You will generate the RTL-based kernel by quickly going through the RTL Kernel Wizard steps without much detail. Review the [Getting Started with RTL Kernels](/docs/getting-started-rtl-kernels/) RTL Kernel Wizard for a thorough tutorial. For complete details on the RTL Kernel Wizard, refer to [Developing Applications](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html).
+You will generate the RTL-based kernel by quickly going through the RTL Kernel Wizard steps (at a high-level). Review the [Getting Started with RTL Kernels](../getting-started-rtl-kernels/README.md) RTL Kernel Wizard for a thorough tutorial. For complete details on the RTL Kernel Wizard, refer to [Developing Applications](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=lhv1569273988420.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
-### Create the Vitis Project
+#### Create the Vitis Project
 
 1. To open the Vitis IDE, enter `vitis` in the command line.
-2. Select **./mixing-c-rtl-kernels/workspace** as the workspace directory and click **Launch**.
+2. Select **./mixing-c-rtl-kernels/workspace** as the workspace directory, and click **Launch**.
 3. Select **Create Application Project**, and name it `rtl_project` and click **Next**.
 4. Select the **xilinx_u200_xdma_201830_2** platform and click **Next**.
-5. Under Templates, select **Empty Application**, and click **Finish**.
+5. Name your project `my_project` and click **Next**.
+6. Under SW Acceleration Templates, select **Empty Application**, and click **Finish**.
 This creates a Vitis IDE project.
 
 Next, generate an RTL-based kernel from within the Vitis IDE.
 
-1. Under the **Xilinx** menu, select **RTL Kernel Wizard**.  
+1. Under the Xilinx menu, select **RTL Kernel Wizard**.  
 This opens the RTL Kernel Wizard Welcome page.
 2. Click **Next**.
 3. In the General Settings dialog box, keep all the default settings, and click **Next**.
@@ -231,9 +232,9 @@ The Summary dialog box is displayed and provides a summary of the RTL kernel set
 
 The RTL Kernel source files have now been created.
 
-### The Vivado Design Suite Project
+#### The Vivado Design Suite Project
 
-At this point, the Vivado Design Suite opens a project automatically with the generated RTL code corresponding to the default `A = A + 1` function.  You can navigate to review the source files, or even run RTL simulation.  However, for this tutorial, you will not be modifying the default RTL Kernel and will only package into an object file (XO).
+At this point, the Vivado Design Suite opens a project automatically with the generated RTL code corresponding to the default `A = A + 1` function.  You can navigate to review the source files or even run RTL simulation.  However, for this tutorial, you will not be modifying the default RTL Kernel and will only package into an object file (`.xo`).
 
 1. In Flow Navigator, click **Generate RTL Kernel**.  
 ![Generate RTL Kernel](images/mixing-c-rtl-kernels_flow_navigator.png)  
@@ -253,13 +254,13 @@ At this point, the Vivado Design Suite opens a project automatically with the ge
 9. Click **OK**.
 10. Exit the Vitis IDE.
 
-   At this point, you have packaged the RTL kernel into the following object file, `vitis_kernel_wizard_0.xo` found in the following directory.
+   At this point, you have packaged the RTL kernel into the following object file, `rtl_kernel_wizard_0.xo` found in the following directory.
 
    ```
-   ./mixing-c-rtl-kernels/workspace/rtl_project/src/vitis_rtl_kernel/rtl_kernel_wizard_0
+   ./mixing-c-rtl-kernels/workspace/my_project/src/vitis_rtl_kernel/rtl_kernel_wizard_0
    ```
 
-### Host Code Updates
+#### Host Code Updates
 
 To access the RTL-based kernel, the host code needs to be updated. The updates have been done in the `host_step2.cpp` file located in the following directory.
 
@@ -294,9 +295,9 @@ Launch the krnl_const_add kernel on line 222.
 q.enqueueTask(krnl_const_add);
 ```  
 
-### Build and Emulation with C++ and RTL Based Kernels
+#### Build and Emulation with C++ and RTL Based Kernels
 
-With the RTL-based kernel added and host code updated, build the application, targeting hardware emulation through the updated makefile in the `run2` directory. The makefile has been updated to add both the CPP and RTL-based kernels to the hardware platform file (xclbin).
+With the RTL-based kernel added and host code updated, build the application, targeting hardware emulation through the updated makefile in the `run2` directory. The makefile has been updated to add both the CPP and RTL-based kernels to the hardware platform file (`xclbin`).
 
 1. Navigate to the `./mixing-c-rtl-kernels/reference-files/run2` directory.
 2. To build the application targeting hardware emulation, run the following makefile from the `./reference-files/run2` directory.  
@@ -322,7 +323,7 @@ With the RTL-based kernel added and host code updated, build the application, ta
 5. View the Timeline Trace report in the Vitis analyzer.
 
    ```
-   vitis_analyzer -open ./timeline_trace.csv
+   vitis_analyzer krnl_vadd.hw_emu.xilinx_u200_xdma_201830_2.xclbin.run_summary
    ```
 
 6. Under **Device**>**Binary Container**, traverse along the timeline and zoom in.  
@@ -336,27 +337,27 @@ With the RTL-based kernel added and host code updated, build the application, ta
 Because a CPP emulation file was packaged with the RTL Kernel (through the RTL Wizard), you can also run software emulation.  To run software emulation, you can use the following steps:
 
    ```bash
-      # Build the application
-      make all TARGET=sw_emu
+# Build the application
+ make all TARGET=sw_emu
 
-      # Set XCL_EMULATION_MODE environment variable for software emulation
-      export XCL_EMULATION_MODE=sw_emu
+# Set XCL_EMULATION_MODE environment variable for software emulation
+export XCL_EMULATION_MODE=sw_emu
 
-      # Run software emulation
-      ./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
+# Run software emulation
+./host krnl_vadd.sw_emu.xilinx_u200_xdma_201830_2.xclbin
 
-      # Create timeline waveform and view in Vitis
-      vitis_analyzer -open ./timeline_trace.csv
+# Open Vitis analyzer and view the timeline waveform
+vitis_analyzer xclbin.run_summary
    ```
 
 ## Next Steps
 
-- For a better understanding of building applications, running emulation, and generating profile and trace reports, see the [Essential Concepts for Building and Running the Accelerated Application](/docs/Pathway3) tutorial.
+- For a better understanding of building applications, running emulation, and generating profile and trace reports, see the [Essential Concepts for Building and Running the Accelerated Application](../Pathway3/README.md) tutorial.
 
 - For details about the RTL Kernel Wizard:  
-  - Review the [Getting Started with RTL Kernels](/docs/getting-started-rtl-kernels/) tutorial.
-  - Review the [RTL Kernel Wizard](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk851038901.html#ouz1504034324041) section in the [Developing Applications](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/lhv1569273988420.html).
+  - Review the [Getting Started with RTL Kernels](../getting-started-rtl-kernels/README.md) tutorial.
+  - Review the [RTL Kernel Wizard](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=devrtlkernel.html;a=ouz1504034324041) section in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 </br>
 <hr/>
-<p align= center><b><a href="/README.md">Return to Main Page</a></b></p>
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

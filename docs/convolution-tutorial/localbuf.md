@@ -1,11 +1,11 @@
-﻿<table>
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
+ <td>
  </td>
  </tr>
 </table>
@@ -18,7 +18,7 @@ For Hardware Emulation runs, the kernel is processing images with a size of 512x
 
 This might not be a problem on modern CPUs because most processors have a hardware controlled cache that store the data automatically on a very fast local cache. However, on an FPGA, this needs to be done explicitly by creating and copying the data into a local array in the hardware kernel.
 
-You can apply the same technique to read a part of the image to the local array and perform the convolution on that local data instead of on the global memory. You will read in as many lines as the width of the filter. You then perform the convolution on these lines and write the result of the line back to global memory. Afterwards, you are going to read only the next line into the next slot of the local memory to perform the next operation. The following diagram shows how this process.
+You can apply the same technique to read a part of the image to the local array and perform the convolution on that local data instead of on the global memory. You will read in as many lines as the width of the filter. You then perform the convolution on these lines and write the result of the line back to global memory. Afterwards, you are going to read only the next line into the next slot of the local memory to perform the next operation. The following diagram shows this process.
 
 ![][convolve_fpga_local]
 
@@ -162,7 +162,7 @@ Now you have completed all the modifications, and you can run hardware emulation
 
 ## Run Hardware Emulation
 
-1. Go to the `Makefile` directory, and use the following command to run hardware emulation.
+Go to the `Makefile` directory, and use the following command to run hardware emulation.
 
    ```
    make run TARGET=hw_emu STEP=localbuf SOLUTION=1 NUM_FRAMES=1
@@ -196,7 +196,7 @@ Here is the updated table. There is a 2.48x boost on kernel execution time persp
 | :----------------- | :--------- | ---------------: | --------------: | ----------: | -------------: | --------------: | ---------: |
 | baseline           |     512x10 | 3.903            | 344             |        20.0 |          0.004 |           0.004 |    5.2     |
 | localbuf           |     512x10 | 1.574 (2.48x)    | 21  (0.12x)     |        20.0 |          0.064 |           0.064 |    13      |
---------------------------------------------------------------------------------------------
+
 
 [convolve_fpga_local]: ./images/convolve_fpga_local.png "FPGA kernel using local memory"
 [convolve_variables]: ./images/convolve_variables.png "Variables used in the inner loop"
@@ -207,6 +207,6 @@ Here is the updated table. There is a 2.48x boost on kernel execution time persp
 You will now look at optimizing floating point calculations for an FPGA by [optimizing using fixed point datatypes](./fixedtype.md).
 </br>
 <hr/>
-<p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/convolution-tutorial/README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>

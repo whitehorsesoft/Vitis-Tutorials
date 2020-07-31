@@ -1,11 +1,11 @@
-﻿<table>
+﻿<table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2019.2 Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   <a href="https://github.com/Xilinx/SDAccel-Tutorials/branches/all">See SDAccel™ Development Environment 2019.1 Tutorials</a>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2020.1 Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2019.2 Vitis Application Acceleration Development Flow Tutorials</a>
    </td>
  </tr>
  <tr>
- <td align="center"><h1>Optimizing Accelerated FPGA Applications: Convolution Example
+ <td>
  </td>
  </tr>
 </table>
@@ -13,7 +13,7 @@
 # 1. Evaluating the Original Application
 
 The C application used in this tutorial performs a 2D convolution of a given set of filter coefficients and an RGBA video.
-The application uses ffmpeg to create input and output video streams that are used as a pipe for reading in each frame of the input video and writing out the corresponding processed frame.
+The application uses FFmpeg to create input and output video streams that are used as a pipe for reading each frame of the input video and writing out the corresponding processed frame.
 
 ![](images/ffmpeg_usage.png)
 
@@ -47,14 +47,16 @@ The first output file generated, `golden_out_full.mp4` is a full movie with 132 
 Here is the summary of the generated golden output files.
 
 - `golden_out_full.mp4`: Used for testing the accelerated application when running on hardware.
-- `golden_out_small.mp4`: Used for testing software and hardware emulation runs, except in Step 5: Using Out-of-order Queues and Multiple Compute Units.
-- `golden_out_small_40.mp4`: Used for testing in Step 5: Using Out-of-order Queues and Multiple Compute Units.
+- `golden_out_small.mp4`: Used for testing software and hardware emulation runs, except in Step 5: Using Out-ofOrder Queues and Multiple Compute Units.
+- `golden_out_small_40.mp4`: Used for testing in Step 5: Using Out-of-Order Queues and Multiple Compute Units.
 
 ## Profile the Application and Establish Performance Goals
 
-As stated in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/html_docs/xilinx2019_2/vitis_doc/Chunk1821279816.html#wgb1568690490380), you can use the `gprof` tool to profile the application and identify potential functions for acceleration.
+As stated in the [Methodology for Accelerating Applications with the Vitis Unified Software Platform](https://www.xilinx.com/cgi-bin/docs/rdoc?v=2020.1;t=vitis+doc;d=methodologyacceleratingapplications.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416), you can use the `gprof` tool to profile the application and identify potential functions for acceleration.
 
-1. Add the `-pg` option in the gcc command line. This is already done in the `Makefile`.
+1. Add the `-pg` option in the gcc command line. 
+
+   This is already done in the `Makefile`.
 2. Change directory into the `cpu_src` folder and run `make` to generate the executable file.
 
    ```
@@ -105,6 +107,6 @@ You have identified the functions from the original application that are targets
 You will use Hardware Emulation runs for measuring performance in each step. As part of the final step, you can run all these steps in hardware to demonstrate how the performance was improved at each step.
 </br>
 <hr/>
-<p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="/docs/convolution-tutorial/README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2019 Xilinx</sup></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p>
